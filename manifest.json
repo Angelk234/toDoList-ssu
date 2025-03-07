@@ -1,0 +1,28 @@
+{
+    "name": "To Do List",
+    "short_name": "2Do",
+    "start_url": "./index.html",
+    "id":"./index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#2196f3",
+    "icons": [
+      {
+        "src": "./ico/cuadrado-nodocuadrado.png",
+        "sizes": "128x128",
+        "type": "image/png"
+      },
+      {
+        "src": "./ico/colouredico.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      },
+      {
+        "src": "./ico/test-btn.png",
+        "sizes": "1024x1024",
+        "type": "image/png",
+        "form_factor": "wide"
+      }
+    ],
+    "description": "Aplicación para gestionar tareas diarias."
+  }
