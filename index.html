@@ -25,11 +25,11 @@
                 </ul>
             </div>
         </center>
-        <footer id="footer">
+        <!-- <footer id="footer">
             <div id="divfoot">
                 <input type="button" onclick="deleteAll()" value="Borrar lista">
             </div>
-        </footer>
+        </footer> -->
     </main>
     <script>
         if ("serviceWorker" in navigator) {
@@ -37,7 +37,7 @@
             navigator.serviceWorker
               .register("/sw.js")
               .then((registration) => {
-                console.log("Service Worker registrado con éxito:", registration);
+                //console.log("Service Worker registrado con éxito:", registration);
               })
               .catch((error) => {
                 console.log("Error al registrar el Service Worker:", error);

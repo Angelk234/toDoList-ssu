@@ -6,8 +6,8 @@ window.addEventListener('load', () => {
         let oList = JSON.parse(jList);
 
 //pruebas
-        console.log("JSON obtenido de localStorage:", jList);
-        console.log("Objeto convertido:", oList);
+        //console.log("JSON obtenido de localStorage:", jList);
+        //console.log("Objeto convertido:", oList);
         //console.log(oList[0].done);
         //oList[0].done = true;
         //localStorage.setItem("lista", JSON.stringify(oList));
@@ -22,6 +22,7 @@ window.addEventListener('load', () => {
                 const li = document.createElement('li');
                 const check = document.createElement('input');
                 const br = document.createElement('br');
+                const ico = document.createElement('img');
                 
                 // Asignacion de contenido y atributos a los elementos
                 li.textContent = item.activitie;
@@ -30,6 +31,31 @@ window.addEventListener('load', () => {
                 check.type = 'checkbox';
                 check.id = 'chkbox' + index; 
                 check.checked = item.done;
+
+                ico.src = './ico/trash.png';
+                ico.id = index;
+                ico.style.height = '18px';
+                ico.style.width = '18px';
+                ico.addEventListener('click', function(){
+                    let jList = localStorage.getItem("lista");
+                    if (jList !== null) {
+                        let aux = 0;
+                        let oList = JSON.parse(jList);
+                        oList.forEach((index) => {
+                            if (aux == ico.id) {
+                                index.eraseLogic = true;
+                                console.log(index)
+                            }
+                            aux++;
+                            localStorage.setItem("lista", JSON.stringify(oList));
+                            location.reload();
+                        });
+                        //console.log("outForeach");
+                    }else {
+                        console.log("Json no vacío")
+                    }
+                });
+
         
                 // Cambiar el color según el done
                 if (item.done) {
@@ -41,8 +67,21 @@ window.addEventListener('load', () => {
 
                 listadoElement.appendChild(li);
                 listadoElement.appendChild(check);
+                listadoElement.appendChild(ico);
                 listadoElement.appendChild(br);
-        
+                
+                if (item.eraseLogic == true) {
+                    
+                    li.style.visibility = 'hidden';
+                    check.style.visibility = 'hidden';
+                    br.style.visibility = 'hidden';
+                    ico.style.visibility = 'hidden';
+                    li.remove();
+                    check.remove();
+                    br.remove();
+                    ico.remove();
+                    
+                }
                 
                 check.addEventListener('change', function() {
                     // Actualizar el estado "done"
@@ -73,7 +112,6 @@ window.addEventListener('load', () => {
 document.addEventListener('DOMContentLoaded', function() {
     const formulario = document.getElementById('formulario');
     const textbox = document.getElementById('textbox');
-    const value = document.getElementById('textbox').value;
 
     if (formulario && textbox) {
             formulario.addEventListener('submit', function(event) {
@@ -93,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const newItem = {
                     activitie: textbox.value,
                     done: false,
-                    date: new Date()
+                    eraseLogic: false
                 };
                 lista.push(newItem);
     
@@ -115,3 +153,4 @@ function deleteAll() {
     localStorage.clear();
     location.reload();
 }
+
