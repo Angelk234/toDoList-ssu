@@ -2,7 +2,7 @@
   "name": "todolist-ssu",
   "version": "1.0.0",
   "description": "This is a proyesct as a test to get in at cenedict to development area.",
-  "main": "app.js",
+  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,8 +18,12 @@
   },
   "homepage": "https://github.com/Angelk234/toDoList-ssu#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
+    "expres": "^0.0.5",
     "express": "^4.21.2",
-    "mysql2": "^3.14.0"
+    "mysql": "^2.18.1",
+    "mysql2": "^3.14.0",
+    "node": "^20.19.0"
   }
 }

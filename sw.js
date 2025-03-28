@@ -2,9 +2,12 @@ const CACHE_TODO = "mi-pwa-cache-v1";
 const ASSETS = [
   "/",
   "./index.html",
-  "./style.css",
-  "./app.js",
-  "./ico/colouredico.png"
+  "./css/style.css",
+  "./js/app.js",
+  "./js/structure.js",
+  "./ico",
+  "./package-lock.json",
+  "./package.json"
 ];
 
 // Instalación: guardar recursos en caché
