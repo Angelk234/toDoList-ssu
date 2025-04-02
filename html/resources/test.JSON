@@ -1,0 +1,17 @@
+[
+    {
+      "nombre": "javier",
+      "edad": 25,
+      "contrasenia": "javieres32"
+    },
+    {
+      "nombre": "paco",
+      "edad": 22,
+      "contrasenia": "paquito64"
+    },
+    {
+      "nombre": "estrujo",
+      "edad": 20,
+      "contrasenia": "quetestrujo"
+    }
+  ]

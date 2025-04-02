@@ -11,7 +11,7 @@ const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'angxd.com',
-    database: 'webos'
+    database: 'todolist'
 });
 
 // Conectar a la base de datos
@@ -25,7 +25,7 @@ connection.connect(error => {
 
 // Endpoint para obtener datos
 app.get('/users', (req, res) => {
-    connection.query('SELECT * FROM users', (error, results) => {
+    connection.query('SELECT nombre FROM users', (error, results) => {
         if (error) {
             res.status(500).json({ error: error.message });
             return;
@@ -33,6 +33,17 @@ app.get('/users', (req, res) => {
         res.json(results);
     });
 });
+
+app.get('/loging', (req, res) => {
+    connection.query('SELECT usuario, contrasenia FROM users', (error, results) => {
+        if (error) {
+            res.status(500).json({ error: error.message });
+            return;
+        }
+        res.json(results);
+    });
+});
+
 
 // Iniciar servidor
 app.listen(3000, () => {
