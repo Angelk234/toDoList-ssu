@@ -21,6 +21,6 @@ then you start "live server".
 
 ----machine as a client----
 
-you only write the IP by you server and ":5500".
+you only write the IP of you server and ":5500".
 example:
 '192.168.100.8:5500'
