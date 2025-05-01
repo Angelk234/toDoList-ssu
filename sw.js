@@ -1,11 +1,7 @@
 const CACHE_TODO = "mi-pwa-cache-v1";
 const ASSETS = [
-  "./css",
-  "./html",
-  "./ico",
-  "./js",
+  "./",
   "./node_modules",
-  "./index.html",
   "./manifest.json",
   "./package-lock.json",
   "./package.json"
