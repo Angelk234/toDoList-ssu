@@ -1,9 +1,32 @@
-window.addEventListener('load', () => {
+import ConnectTo from './connectTo.js';
+const serv = new ConnectTo();
+
+window.addEventListener('load', async (e) => {
+
+    let userData = localStorage.getItem("userActive");
+    let id_u = JSON.parse(userData).user.id_user;
+    let userlist;
+    try {
+        const response = await fetch('http://'+ serv.ip +':3000/tasks', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id_u })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) throw new Error(data.error || 'Error al rescatar las tareas');
+
+        userlist = data;
+    } catch {
+    }
+    console.log(userlist);
     // Obtener el JSON desde localStorage
-    let jList = localStorage.getItem("lista");
+    //let jList = localStorage.getItem("lista");
+    let jList = userlist;
     if (jList !== null) {
         // Convertir el JSON en un objeto
-        let oList = JSON.parse(jList);
+        let oList = jList;
 
         const listadoElement = document.getElementById('listado');
 
@@ -15,7 +38,7 @@ window.addEventListener('load', () => {
                 const ico = document.createElement('img');
 
 
-                li.textContent = item.activitie;
+                li.textContent = item.tarea;
                 li.id = 'element' + index;
 
                 check.type = 'checkbox';
@@ -27,23 +50,41 @@ window.addEventListener('load', () => {
                 ico.style.height = '18px';
                 ico.style.width = '18px';
                 ico.addEventListener('click', function () {
-                    let jList = localStorage.getItem("lista");
-                    if (jList !== null) {
+                    //let jList = localStorage.getItem("lista");
+                    if (oList !== null) {
                         let aux = 0;
-                        let oList = JSON.parse(jList);
-                        oList.forEach((index) => {
+                        //let oList = JSON.parse(jList);
+                        oList.forEach((itemx) => {
                             if (aux == ico.id) {
-                                index.eraseLogic = true;
-                                console.log(index)
+                                let id_t = itemx.id_t;
+                                //itemx.eraseLogic = true;
+                                //console.log(id_t)
+                                try {
+                                    const response = fetch('http://'+ serv.ip +':3000/eraseLogic', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({ id_t })
+                                    });
+
+                                    const data = response.json();
+
+                                    if (!response.ok) throw new Error(data.error || 'Error al encontrar tarea');
+
+                                    userlist = data;
+                                } catch {
+                                }
                             }
                             aux++;
-                            localStorage.setItem("lista", JSON.stringify(oList));
-                            location.reload();
+                            //localStorage.setItem("lista", JSON.stringify(oList));
+
                         });
                         //console.log("outForeach");
                     } else {
                         console.log("Json no vacío")
                     }
+                    setTimeout(function () {
+                        location.reload();
+                    }, 100);
                 });
 
 
@@ -60,7 +101,8 @@ window.addEventListener('load', () => {
                 listadoElement.appendChild(ico);
                 listadoElement.appendChild(br);
 
-                if (item.eraseLogic == true) {
+                //console.log(item);
+                if (item.erase_logic == true) {
 
                     li.style.visibility = 'hidden';
                     check.style.visibility = 'hidden';
@@ -84,9 +126,44 @@ window.addEventListener('load', () => {
                     if (this.checked) {
                         li.style.color = 'gray';
                         li.style.textDecoration = 'line-through';
+
+                        let done = this.checked;
+                        let id_t = oList[index].id_t;
+                        try {
+                            const response = fetch('http://'+ serv.ip +':3000/done', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ done, id_t })
+                            });
+
+                            const data = response.json();
+
+                            if (!response.ok) throw new Error(data.error || 'Error al encontrar tarea');
+
+                            userlist = data;
+                        } catch {
+                        }
+
                     } else {
                         li.style.color = 'black';
                         li.style.textDecoration = 'none';
+
+                        let done = this.checked;
+                        let id_t = oList[index].id_t;
+                        try {
+                            const response = fetch('http://'+ serv.ip +':3000/done', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ done, id_t })
+                            });
+
+                            const data = response.json();
+
+                            if (!response.ok) throw new Error(data.error || 'Error al encontrar tarea');
+
+                            userlist = data;
+                        } catch {
+                        }
                     }
                 });
             });
@@ -102,6 +179,10 @@ window.addEventListener('load', () => {
 });
 
 document.addEventListener('DOMContentLoaded', function () {
+
+    let userData = localStorage.getItem("userActive");
+    let id_u = JSON.parse(userData).user.id_user;
+
     const formulario = document.getElementById('formulario');
     const textbox = document.getElementById('textbox');
 
@@ -121,9 +202,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Crear un nuevo ítem y agregarlo a la lista
             const newItem = {
+                id_t: null,
                 activitie: textbox.value,
                 done: false,
-                eraseLogic: false
+                eraseLogic: false,
+                id_user: id_u
             };
             lista.push(newItem);
 
