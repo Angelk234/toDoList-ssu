@@ -174,6 +174,8 @@ window.addEventListener('load', async (e) => {
     } else {
         console.log("lista vacía");
     }
+
+    chargeuser();
 });
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -244,14 +246,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-//en desuso, posible uso en un futuro :(
-function deleteAll() {
-    localStorage.clear();
-    location.reload();
-}
-
 function chargeuser() {
     let userData = localStorage.getItem("userActive");
     let p = document.getElementById("username");
     p.textContent = "Hola " + JSON.parse(userData).user.nombre;
+}
+
+//en desuso, posible uso en un futuro :(
+function deleteAll() {
+    localStorage.clear();
+    location.reload();
 }
