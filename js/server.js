@@ -154,6 +154,19 @@ app.post('/done', (req, res) => {
     });
 });
 
+app.post('/newTask', (req, res) => {
+  const { task, id_u } = req.body;
+  connection.query(
+    'INSERT INTO listado (tarea, done, erase_logic, id_user) VALUES (?, false, false, ?)',
+    [task, id_u],
+    (error, results) => {
+      if (error) {
+        res.status(500).json({ error: error.message });
+        return;
+      }
+      res.json(results);
+    });
+});
 
 // Iniciar servidor
 app.listen(3000, () => {

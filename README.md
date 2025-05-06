@@ -6,6 +6,11 @@ if you want to connect to this app
 
 ----machine as a server----
 
+in connectTo.js change ip = 'localhost' as tou required
+
+
+
+[doesn't work]
 youn need write "ipconfig" in your command windows, search IPv4 and save that IP.
 
 also you need to change all files:

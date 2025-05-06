@@ -4,5 +4,6 @@ export default class ConnectTo {
     }
 }
 
+//'localhost'
 // let serv = new connectTo()
 // console.log(serv.ip);

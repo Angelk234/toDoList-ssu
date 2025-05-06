@@ -7,7 +7,7 @@ window.addEventListener('load', async (e) => {
     let id_u = JSON.parse(userData).user.id_user;
     let userlist;
     try {
-        const response = await fetch('http://'+ serv.ip +':3000/tasks', {
+        const response = await fetch('http://' + serv.ip + ':3000/tasks', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id_u })
@@ -20,7 +20,7 @@ window.addEventListener('load', async (e) => {
         userlist = data;
     } catch {
     }
-    console.log(userlist);
+    //console.log(userlist);
     // Obtener el JSON desde localStorage
     //let jList = localStorage.getItem("lista");
     let jList = userlist;
@@ -60,7 +60,7 @@ window.addEventListener('load', async (e) => {
                                 //itemx.eraseLogic = true;
                                 //console.log(id_t)
                                 try {
-                                    const response = fetch('http://'+ serv.ip +':3000/eraseLogic', {
+                                    const response = fetch('http://' + serv.ip + ':3000/eraseLogic', {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },
                                         body: JSON.stringify({ id_t })
@@ -130,7 +130,7 @@ window.addEventListener('load', async (e) => {
                         let done = this.checked;
                         let id_t = oList[index].id_t;
                         try {
-                            const response = fetch('http://'+ serv.ip +':3000/done', {
+                            const response = fetch('http://' + serv.ip + ':3000/done', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ done, id_t })
@@ -151,7 +151,7 @@ window.addEventListener('load', async (e) => {
                         let done = this.checked;
                         let id_t = oList[index].id_t;
                         try {
-                            const response = fetch('http://'+ serv.ip +':3000/done', {
+                            const response = fetch('http://' + serv.ip + ':3000/done', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ done, id_t })
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const textbox = document.getElementById('textbox');
 
     if (formulario && textbox) {
-        formulario.addEventListener('submit', function (event) {
+        formulario.addEventListener('submit', async function (event) {
             event.preventDefault();
 
             // validacion campo vacio
@@ -195,23 +195,45 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert("El campo no puede estar vacío. Por favor, ingresa una tarea.");
                 return; // Detener la ejecución si el campo está vacío
             }
+            console.log('???');
+
+            console.log(textbox.value);
+            console.log(id_u);
+            let task = textbox.value;
+            let tasks;
+            try {
+                const response = await fetch('http://'+ serv.ip +':3000/newTask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ task, id_u })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) throw new Error(data.error || 'Error al rescatar las tareas');
+
+                tasks = data;
+            } catch {
+            }
+
+            //console.log(tasks);
 
             // Obtener la lista actual del localStorage
-            let oList = localStorage.getItem("lista");
-            let lista = oList ? JSON.parse(oList) : []; // Si no hay datos, cres un array vacío
+            // let oList = localStorage.getItem("lista");
+            // let lista = oList ? JSON.parse(oList) : []; // Si no hay datos, cres un array vacío
 
-            // Crear un nuevo ítem y agregarlo a la lista
-            const newItem = {
-                id_t: null,
-                activitie: textbox.value,
-                done: false,
-                eraseLogic: false,
-                id_user: id_u
-            };
-            lista.push(newItem);
+            // // Crear un nuevo ítem y agregarlo a la lista
+            // const newItem = {
+            //     id_t: null,
+            //     activitie: textbox.value,
+            //     done: false,
+            //     eraseLogic: false,
+            //     id_user: id_u
+            // };
+            // lista.push(newItem);
 
-            // Guardar la lista actualizada en localStorage
-            localStorage.setItem("lista", JSON.stringify(lista));
+            // // Guardar la lista actualizada en localStorage
+            // localStorage.setItem("lista", JSON.stringify(lista));
 
             // Limpiar el campo de texto
             textbox.value = "";
