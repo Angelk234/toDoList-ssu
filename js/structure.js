@@ -174,8 +174,6 @@ window.addEventListener('load', async (e) => {
     } else {
         console.log("lista vacía");
     }
-
-    chargeuser();
 });
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -246,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-//en desuso, posible uso en un futuro
+//en desuso, posible uso en un futuro :(
 function deleteAll() {
     localStorage.clear();
     location.reload();
